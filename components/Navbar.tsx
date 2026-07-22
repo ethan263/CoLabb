@@ -11,7 +11,7 @@ export default function Navbar() {
     const updateTime = () => {
       const now = new Date();
       setTime(
-        now.toLocaleTimeString("en-US", {
+        now.toLocaleTimeString("en-SA", {
           hour: "2-digit",
           minute: "2-digit",
           hour12: true,

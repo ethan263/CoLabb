@@ -72,7 +72,7 @@ export default function Hero() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center h-full my-auto">
         {/* Left Side: Editorial Fragmented Artwork Letters */}
-        <div className="lg:col-span-7 relative min-h-[420px] sm:min-h-[500px] lg:min-h-[600px] flex items-center justify-center">
+        <div className="lg:col-span-7 relative min-h-105 sm:min-h-125min-h-[600px] flex items-center justify-center">
           {/* Letter C */}
           <div
             ref={letterCRef}
