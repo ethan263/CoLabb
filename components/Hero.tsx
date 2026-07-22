@@ -76,7 +76,7 @@ export default function Hero() {
           {/* Letter C */}
           <div
             ref={letterCRef}
-            className="absolute top-0 left-[2%] text-[22vw] lg:text-[14rem] font-extrabold leading-none tracking-tighter -rotate-[10deg] text-colab-dark"
+            className="absolute top-0 left-[2%] text-[22vw] lg:text-[14rem] font-extrabold leading-none tracking-tighter -rotate-10deg] text-colab-dark"
           >
             C
           </div>
@@ -84,7 +84,7 @@ export default function Hero() {
           {/* Letter O */}
           <div
             ref={letterORef}
-            className="absolute top-[4%] left-[30%] text-[24vw] lg:text-[15rem] font-extrabold leading-none tracking-tighter rotate-[6deg] text-colab-dark"
+            className="absolute top-[4%] left-[30%] text-[24vw] lg:text-[15rem] font-extrabold leading-none tracking-tighter rotate-6deg] text-colab-dark"
           >
             O
             <span className="absolute -top-2 -right-4 lg:-top-4 lg:-right-6 text-sm lg:text-xl font-normal border border-colab-dark rounded-full w-6 h-6 lg:w-8 lg:h-8 flex items-center justify-center text-colab-dark">
@@ -95,7 +95,7 @@ export default function Hero() {
           {/* Letter L */}
           <div
             ref={letterLRef}
-            className="absolute top-[30%] left-[8%] text-[25vw] lg:text-[16rem] font-extrabold leading-none tracking-tighter -rotate-[16deg] text-colab-dark"
+            className="absolute top-[30%] left-[8%] text-[25vw] lg:text-[16rem] font-extrabold leading-none tracking-tighter -rotate-16deg] text-colab-dark"
           >
             L
           </div>
@@ -103,7 +103,7 @@ export default function Hero() {
           {/* Letter A */}
           <div
             ref={letterARef}
-            className="absolute top-[26%] left-[40%] text-[26vw] lg:text-[17rem] font-extrabold leading-none tracking-tighter rotate-[12deg] text-colab-dark"
+            className="absolute top-[26%] left-[40%] text-[26vw] lg:text-[17rem] font-extrabold leading-none tracking-tighter rotate-12deg] text-colab-dark"
           >
             A
           </div>
@@ -111,7 +111,7 @@ export default function Hero() {
           {/* Letter B */}
           <div
             ref={letterBRef}
-            className="absolute bottom-0 left-[22%] text-[28vw] lg:text-[18rem] font-extrabold leading-none tracking-tighter -rotate-[4deg] text-colab-dark"
+            className="absolute bottom-0 left-[22%] text-[28vw] lg:text-[18rem] font-extrabold leading-none tracking-tighter -rotate-4deg] text-colab-dark"
           >
             B
           </div>
