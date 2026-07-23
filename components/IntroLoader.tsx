@@ -13,14 +13,13 @@ export default function IntroLoader({
   const [isDone, setIsDone] = useState(false);
   const touchStartY = useRef<number | null>(null);
 
-  // Transition sequence out of the intro video
   const handleFinish = useCallback(() => {
     if (isDone) return;
     setIsDone(true);
 
     if (containerRef.current) {
       gsap.to(containerRef.current, {
-        yPercent: -100, // Slides up like a shutter curtain
+        yPercent: -100,
         duration: 1.1,
         ease: "power4.inOut",
         onComplete: () => {
@@ -30,18 +29,13 @@ export default function IntroLoader({
     }
   }, [isDone, onComplete]);
 
-  // Listen for Scroll & Touch Swipe Gesture Events
   useEffect(() => {
     if (isDone) return;
 
-    // 1. Mouse Wheel / Trackpad Scroll Down Detection
     const handleWheel = (e: WheelEvent) => {
-      if (e.deltaY > 10) {
-        handleFinish();
-      }
+      if (e.deltaY > 10) handleFinish();
     };
 
-    // 2. Touch Swipe Up Detection for Mobile
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY.current = e.touches[0].clientY;
     };
@@ -49,12 +43,7 @@ export default function IntroLoader({
     const handleTouchMove = (e: TouchEvent) => {
       if (touchStartY.current === null) return;
       const touchEndY = e.touches[0].clientY;
-      const deltaY = touchStartY.current - touchEndY;
-
-      // User swiped up by more than 30px
-      if (deltaY > 30) {
-        handleFinish();
-      }
+      if (touchStartY.current - touchEndY > 30) handleFinish();
     };
 
     const container = containerRef.current;
@@ -76,9 +65,10 @@ export default function IntroLoader({
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-100 bg-black flex items-center justify-center overflow-hidden select-none"
+      // Added w-screen and h-[100dvh] to perfectly fit mobile dimensions
+      className="fixed inset-0 z-[100] bg-black overflow-hidden select-none w-screen h-[100dvh]"
     >
-      {/* Background Video */}
+      {/* Absolute positioning trick to ensure the video always covers the screen without stretching */}
       <video
         ref={videoRef}
         src="/intro.mp4"
@@ -86,23 +76,21 @@ export default function IntroLoader({
         muted
         playsInline
         onEnded={handleFinish}
-        className="w-full h-full object-cover"
+        className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover pointer-events-none"
       />
 
-      {/* Visual Scroll Hint Badge */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 pointer-events-none">
-        <span className="font-mono text-[10px] text-white/80 uppercase tracking-widest animate-pulse">
+        <span className="font-mono text-[10px] text-white/80 uppercase tracking-widest animate-pulse drop-shadow-md">
           [ SCROLL TO ENTER ]
         </span>
-        <span className="text-white/60 text-xs animate-bounce">↓</span>
+        <span className="text-white/60 text-xs animate-bounce drop-shadow-md">↓</span>
       </div>
 
-      {/* Skip Button */}
       <button
         onClick={handleFinish}
         className="absolute top-6 right-6 z-10 px-4 py-2 border border-white/30 bg-black/50 backdrop-blur-md text-white font-mono text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-colors"
       >
-        [ Continue  → ]
+        [ SKIP INTRO → ]
       </button>
     </div>
   );

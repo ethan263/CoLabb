@@ -141,7 +141,7 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative w-full py-24 md:py-36 px-6 md:px-12 border-b border-colab-dark bg-colab-bg text-colab-dark"
+      className="relative w-full py-24 md:py-36 px-6 md:px-12 bg-colab-bg text-colab-dark"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* Left Section Label (Cols 1-2) */}

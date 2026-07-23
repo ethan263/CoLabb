@@ -126,7 +126,7 @@ export default function Hero({ introFinished }: HeroProps) {
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-screen w-full pt-28 sm:pt-32 md:pt-36 pb-16 px-6 md:px-12 flex flex-col justify-between border-b border-colab-dark bg-colab-bg text-colab-dark overflow-hidden select-none"
+      className="relative min-h-screen w-full pt-28 sm:pt-32 md:pt-36 pb-16 px-6 md:px-12 flex flex-col justify-between bg-colab-bg text-colab-dark overflow-hidden select-none"
     >
       {/* Top Section: Right-aligned Editorial Headline */}
       <div className="w-full flex justify-end">
