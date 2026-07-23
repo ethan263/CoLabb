@@ -96,7 +96,7 @@ export default function Contact() {
       {/* Footer Bar */}
       <div className="p-6 md:px-12 py-4 flex justify-between items-center text-[10px] font-mono uppercase text-colab-dark/60">
         <div>© 2026 CO LAB. ALL RIGHTS RESERVED.</div>
-        <div>DESIGNED by wWebbys</div>
+        <div>DESIGNED by wWebby</div>
       </div>
     </section>
   );
