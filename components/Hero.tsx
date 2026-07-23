@@ -3,15 +3,19 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 
-export default function Hero() {
+interface HeroProps {
+  introFinished?: boolean;
+}
+
+export default function Hero({ introFinished }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Refs for individual letters to animate separately
-  const letterCRef = useRef<HTMLDivElement>(null);
-  const letterORef = useRef<HTMLDivElement>(null);
-  const letterLRef = useRef<HTMLDivElement>(null);
-  const letterARef = useRef<HTMLDivElement>(null);
-  const letterBRef = useRef<HTMLDivElement>(null);
+  const lettersTrackRef = useRef<HTMLDivElement>(null);
+  const letterCRef = useRef<HTMLSpanElement>(null);
+  const letterORef = useRef<HTMLSpanElement>(null);
+  const letterLRef = useRef<HTMLSpanElement>(null);
+  const letterARef = useRef<HTMLSpanElement>(null);
+  const letterBRef = useRef<HTMLSpanElement>(null);
+  const subtextRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -24,117 +28,179 @@ export default function Hero() {
         letterBRef.current,
       ];
 
-      // 1. Entrance Stagger Animation
-      gsap.from(letters, {
-        y: 100,
-        opacity: 0,
-        rotate: () => (Math.random() - 0.5) * 30,
-        duration: 1.2,
-        stagger: 0.08,
-        ease: "power4.out",
+      // Entrance Animation Sequence
+      const mainTl = gsap.timeline();
+
+      mainTl
+        // 1. Letters drop in sequentially with gravity impact
+        .fromTo(
+          letters,
+          {
+            y: -220,
+            opacity: 0,
+            scale: 1.2,
+            rotate: (i) => (i % 2 === 0 ? -6 : 6),
+          },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            duration: 0.9,
+            stagger: 0.12,
+            ease: "back.out(1.5)",
+          }
+        )
+        // 2. Horizontal gap stretch expansion
+        .to(
+          lettersTrackRef.current,
+          {
+            gap: "clamp(0.5rem, 3vw, 2.5rem)",
+            duration: 0.8,
+            ease: "power3.inOut",
+          },
+          "+=0.15"
+        )
+        // 3. Subtitle reveal ("BRAND MANAGEMENT")
+        .fromTo(
+          subtextRef.current,
+          {
+            y: 20,
+            opacity: 0,
+            letterSpacing: "0.1em",
+          },
+          {
+            y: 0,
+            opacity: 1,
+            letterSpacing: "0.35em",
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          "-=0.3"
+        )
+        // 4. Top editorial headline reveal
+        .fromTo(
+          headlineRef.current,
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+          "-=0.5"
+        );
+
+      // Clean Responsive Scroll Parallax
+      const mm = gsap.matchMedia();
+
+      // Desktop & Tablet
+      mm.add("(min-width: 768px)", () => {
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+          },
+        })
+          .to(lettersTrackRef.current, { y: -50, opacity: 0.85, ease: "none" }, 0)
+          .to(subtextRef.current, { y: -30, opacity: 0.7, ease: "none" }, 0)
+          .to(headlineRef.current, { y: -40, opacity: 0.3, ease: "none" }, 0);
       });
 
-      gsap.from(headlineRef.current, {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        delay: 0.3,
-        ease: "power3.out",
+      // Mobile (< 768px)
+      mm.add("(max-width: 767px)", () => {
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.8,
+          },
+        })
+          .to(lettersTrackRef.current, { y: -25, opacity: 0.85, ease: "none" }, 0)
+          .to(subtextRef.current, { y: -15, opacity: 0.7, ease: "none" }, 0)
+          .to(headlineRef.current, { y: -20, opacity: 0.4, ease: "none" }, 0);
       });
-
-      // 2. Parallax Scroll Physics via GSAP ScrollTrigger
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 1.2, // Adds inertia momentum to native scrolling
-        },
-      });
-
-      // Move each letter at different speeds and angles as you scroll down
-      scrollTl
-        .to(letterCRef.current, { y: -160, rotate: -12, ease: "none" }, 0)
-        .to(letterORef.current, { y: -220, rotate: 18, ease: "none" }, 0)
-        .to(letterLRef.current, { y: -110, rotate: -22, ease: "none" }, 0)
-        .to(letterARef.current, { y: -190, rotate: 14, ease: "none" }, 0)
-        .to(letterBRef.current, { y: -90, rotate: 28, ease: "none" }, 0)
-        .to(headlineRef.current, { y: -80, opacity: 0.2, ease: "none" }, 0);
     },
-    { scope: containerRef }
+    { scope: containerRef, dependencies: [introFinished] }
   );
 
   return (
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-screen w-full pt-28 md:pt-32 pb-12 px-6 md:px-12 flex flex-col justify-between border-b border-colab-dark/20 overflow-hidden bg-colab-bg text-colab-dark select-none"
+      className="relative min-h-screen w-full pt-28 sm:pt-32 md:pt-36 pb-16 px-6 md:px-12 flex flex-col justify-between border-b border-colab-dark bg-colab-bg text-colab-dark overflow-hidden select-none"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center h-full my-auto">
-        {/* Left Side: Editorial Fragmented Artwork Letters */}
-        <div className="lg:col-span-7 relative min-h-105 sm:min-h-125min-h-[600px] flex items-center justify-center">
-          {/* Letter C */}
-          <div
-            ref={letterCRef}
-            className="absolute top-0 left-[2%] text-[22vw] lg:text-[14rem] font-extrabold leading-none tracking-tighter -rotate-10deg] text-colab-dark"
-          >
-            C
-          </div>
-
-          {/* Letter O */}
-          <div
-            ref={letterORef}
-            className="absolute top-[4%] left-[30%] text-[24vw] lg:text-[15rem] font-extrabold leading-none tracking-tighter rotate-6deg] text-colab-dark"
-          >
-            O
-            <span className="absolute -top-2 -right-4 lg:-top-4 lg:-right-6 text-sm lg:text-xl font-normal border border-colab-dark rounded-full w-6 h-6 lg:w-8 lg:h-8 flex items-center justify-center text-colab-dark">
-              ®
-            </span>
-          </div>
-
-          {/* Letter L */}
-          <div
-            ref={letterLRef}
-            className="absolute top-[30%] left-[8%] text-[25vw] lg:text-[16rem] font-extrabold leading-none tracking-tighter -rotate-16deg] text-colab-dark"
-          >
-            L
-          </div>
-
-          {/* Letter A */}
-          <div
-            ref={letterARef}
-            className="absolute top-[26%] left-[40%] text-[26vw] lg:text-[17rem] font-extrabold leading-none tracking-tighter rotate-12deg] text-colab-dark"
-          >
-            A
-          </div>
-
-          {/* Letter B */}
-          <div
-            ref={letterBRef}
-            className="absolute bottom-0 left-[22%] text-[28vw] lg:text-[18rem] font-extrabold leading-none tracking-tighter -rotate-4deg] text-colab-dark"
-          >
-            B
-          </div>
-        </div>
-
-        {/* Right Side: Primary Editorial Statement */}
+      {/* Top Section: Right-aligned Editorial Headline */}
+      <div className="w-full flex justify-end">
         <div
           ref={headlineRef}
-          className="lg:col-span-5 flex flex-col justify-center pt-6 lg:pt-16"
+          className="w-full sm:w-4/5 lg:w-1/2 xl:w-5/12 text-left"
         >
-          <span className="text-xs uppercase tracking-widest font-mono mb-4 text-colab-dark/70">
+          <span className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-widest text-colab-dark/70 block mb-2 sm:mb-3">
             (WE ARE)
           </span>
-          <h1 className="font-serif text-4xl sm:text-6xl xl:text-7xl leading-[0.95] tracking-tight text-colab-dark">
-            “The digital-first partner for next-generation brands.”
+          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl leading-[1.02] tracking-tight text-colab-dark">
+            The digital-first partner for next-generation brands.
           </h1>
         </div>
       </div>
 
-      {/* Section Footer Bar */}
-      <div className="flex justify-between items-end pt-8 text-[11px] font-mono uppercase tracking-wider text-colab-dark/60 border-t border-colab-dark/10">
-        <div>(@) VR / EST. 2026</div>
-        <div className="hidden sm:block">SCROLL TO EXPLORE ↓</div>
+      {/* Center Section: Stretched CO LAB + BRAND MANAGEMENT */}
+      <div className="w-full my-auto py-12 flex flex-col items-center justify-center text-center">
+        {/* Horizontal Stretched Container */}
+        <div
+          ref={lettersTrackRef}
+          className="flex items-center justify-center gap-0 font-display font-extrabold text-colab-dark leading-none tracking-tighter"
+        >
+          <span
+            ref={letterCRef}
+            style={{ fontSize: "clamp(3.5rem, 14vw, 15rem)" }}
+            className="inline-block"
+          >
+            C
+          </span>
+          <span
+            ref={letterORef}
+            style={{ fontSize: "clamp(3.5rem, 14vw, 15rem)" }}
+            className="inline-block relative"
+          >
+            O
+            <span className="absolute -top-1 -right-3 sm:top-2 sm:-right-6 text-[9px] sm:text-xs font-sans font-normal border border-colab-dark rounded-full w-4 h-4 sm:w-6 sm:h-6 flex items-center justify-center">
+              ®
+            </span>
+          </span>
+
+          {/* Spacer between CO and LAB */}
+          <span className="w-2 sm:w-6 lg:w-12" />
+
+          <span
+            ref={letterLRef}
+            style={{ fontSize: "clamp(3.5rem, 14vw, 15rem)" }}
+            className="inline-block"
+          >
+            L
+          </span>
+          <span
+            ref={letterARef}
+            style={{ fontSize: "clamp(3.5rem, 14vw, 15rem)" }}
+            className="inline-block"
+          >
+            A
+          </span>
+          <span
+            ref={letterBRef}
+            style={{ fontSize: "clamp(3.5rem, 14vw, 15rem)" }}
+            className="inline-block"
+          >
+            B
+          </span>
+        </div>
+
+        {/* Centered Subtitle */}
+        <div
+          ref={subtextRef}
+          className="mt-4 sm:mt-6 font-mono text-xs sm:text-base md:text-xl font-extrabold uppercase tracking-[0.35em] text-colab-dark/80"
+        >
+          BRAND MANAGEMENT
+        </div>
       </div>
     </section>
   );
