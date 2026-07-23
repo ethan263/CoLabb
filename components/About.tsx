@@ -275,8 +275,8 @@ export default function About() {
 
             {/* Card Footer Metadata */}
             <div className="mt-8 pt-4 border-t border-colab-dark/20 flex justify-between items-center font-mono text-[10px] uppercase text-colab-dark/60">
-              <span>CO LAB CREATIVE STUDIO</span>
-              <span>SAN FRANCISCO • LA</span>
+              <span>CO LAB BRAND MANAGEMENT</span>
+              <span>CAPE TOWN • SA</span>
             </div>
           </div>
         </div>
