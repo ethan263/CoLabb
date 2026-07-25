@@ -98,23 +98,19 @@ export default function Colabbs() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div ref={trackRef} className="flex items-center gap-16 md:gap-28 w-max px-6">
+        <div ref={trackRef} className="flex items-center gap-20 md:gap-32 w-max px-6">
           {DOUBLE_LOGOS.map((brand, index) => (
             <div
               key={`${brand.id}-${index}`}
-              className="group relative h-10 sm:h-14 w-32 sm:w-44 shrink-0 flex items-center justify-center border-none bg-transparent"
+              className="group relative h-16 sm:h-20 md:h-24 w-44 sm:w-56 md:w-64 shrink-0 flex items-center justify-center border-none bg-transparent"
             >
               <Image
                 src={brand.image}
                 alt={brand.name}
                 fill
-                /* 
-                  1. object-contain prevents cropping.
-                  2. 'filter brightness-0 dark:invert' forces all SVGs to adapt automatically to Light and Dark mode.
-                  3. Zero borders or background frames around the logos.
-                */
-                className="object-contain opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 filter brightness-0 dark:invert"
-                sizes="(max-width: 768px) 128px, 176px"
+                /* Keep logos dark so they stay readable on the beige background */
+                className="object-contain opacity-85 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 filter brightness-0"
+                sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, 256px"
               />
             </div>
           ))}
