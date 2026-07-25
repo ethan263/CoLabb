@@ -39,8 +39,7 @@ export default function Contact() {
             </a>
             <p className="mt-6 text-sm font-mono text-colab-dark/80 leading-relaxed">
               Studio Address <br />
-              100 Creative Way, Suite 400 <br />
-              San Francisco, CA 94103
+              Cape Town South Africa
             </p>
           </div>
 
