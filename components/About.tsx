@@ -246,7 +246,7 @@ export default function About() {
           <div
             ref={modalCardRef}
             onClick={(e) => e.stopPropagation()} // Prevents overlay click when clicking card body
-            className="relative w-full max-w-lg border border-colab-dark bg-colab-bg text-colab-dark p-6 sm:p-8 shadow-2xl"
+            className="relative w-full max-w-lg max-h-[85dvh] overflow-y-auto border border-colab-dark bg-colab-bg text-colab-dark p-6 sm:p-8 shadow-2xl"
           >
             {/* Header */}
             <div className="flex justify-between items-center pb-4 border-b border-colab-dark/20 mb-6">

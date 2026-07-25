@@ -83,7 +83,7 @@ export default function Colabbs() {
       className="w-full border-b border-colab-dark bg-colab-bg text-colab-dark overflow-hidden select-none py-16"
     >
       {/* Section Header */}
-      <div className="px-6 md:px-12 pb-8 flex justify-between items-center">
+      <div className="px-6 md:px-12 pb-8 flex flex-wrap justify-between items-center gap-x-4 gap-y-2">
         <h2 className="text-3xl md:text-5xl font-extrabold uppercase tracking-tighter font-display">
           COLABBS
         </h2>

@@ -21,7 +21,7 @@ export default function Contact() {
         <span className="text-xs font-mono uppercase tracking-widest text-colab-dark/60 mb-2 block">
           [ CONTACT ]
         </span>
-        <p className="text-4xl md:text-7xl font-extrabold tracking-tighter uppercase">
+        <p className="text-[clamp(2rem,8vw,4.5rem)] font-extrabold tracking-tighter uppercase leading-none">
           LET’S COLLABORATE.
         </p>
       </div>
@@ -33,7 +33,7 @@ export default function Contact() {
           <div>
             <a
               href="mailto:hello@colab.co"
-              className="text-2xl md:text-4xl font-bold underline decoration-colab-secondary decoration-2 underline-offset-4 hover:opacity-70 transition-opacity"
+              className="break-all text-2xl md:text-4xl font-bold underline decoration-colab-secondary decoration-2 underline-offset-4 hover:opacity-70 transition-opacity"
             >
               hello@colab.co
             </a>
@@ -93,7 +93,7 @@ export default function Contact() {
       </div>
 
       {/* Footer Bar */}
-      <div className="p-6 md:px-12 py-4 flex justify-between items-center text-[10px] font-mono uppercase text-colab-dark/60">
+      <div className="p-6 md:px-12 py-4 flex flex-wrap justify-between items-center gap-x-4 gap-y-1 text-[10px] font-mono uppercase text-colab-dark/60">
         <div>© 2026 CO LAB. ALL RIGHTS RESERVED.</div>
         <div>DESIGNED by wWebby</div>
       </div>

@@ -8,6 +8,11 @@
     color: #0D0D0D;
   }
 
+  /* Prevent stray horizontal scroll from animated/transformed elements on mobile */
+  body {
+    overflow-x: hidden;
+  }
+
   /* Custom minimalist scrollbar matching palette */
   ::-webkit-scrollbar {
     width: 6px;
