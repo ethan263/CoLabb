@@ -43,9 +43,6 @@ export default function Contact() {
             </p>
           </div>
 
-          <div className="text-xs font-mono uppercase tracking-wider text-colab-dark/60">
-            Available for Q3/Q4 Brand Partnerships
-          </div>
         </div>
 
         {/* Right Column: Interactive Form */}
